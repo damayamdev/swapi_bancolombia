@@ -7,7 +7,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)]()
 [![React](https://img.shields.io/badge/React-19.2-blue)]()
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF)]()
-[![Azure Pipeline](https://img.shields.io/badge/Azure-Pipeline-0078D7)]()
 
 ---
 
@@ -16,7 +15,6 @@
 - [Características](#-características)
 - [Arquitectura](#-arquitectura)
 - [Tecnologías](#-tecnologías)
-- [CI/CD Pipeline](#-cicd-pipeline)
 - [Instalación](#-instalación)
 - [Ejecución](#-ejecución)
 - [Testing](#-testing)
@@ -119,75 +117,7 @@ El proyecto implementa **Clean Architecture** con separación clara de responsab
 
 ---
 
-## � CI/CD Pipeline
-
-Este proyecto implementa un pipeline completo de **Integración Continua** y **Entrega Continua** con Azure DevOps.
-
-### 🎯 Pipeline Overview
-
-```yaml
-┌─────────────────────────────────────────────────────────┐
-│  CI Stage: Integración Continua                         │
-│  ├─ Linting y formato (ESLint + Prettier)              │
-│  ├─ Build de producción                                 │
-│  ├─ Tests unitarios + Coverage (>70%)                   │
-│  ├─ Tests E2E con Playwright                            │
-│  └─ Publicación de artefactos                           │
-│                                                          │
-│  CD Stage: Entrega Continua                             │
-│  ├─ Deploy a Staging (rama develop)                     │
-│  └─ Deploy a Producción (rama main + approval)          │
-└─────────────────────────────────────────────────────────┘
-```
-
-### ✨ Características del Pipeline
-
-- ✅ **Cache de dependencias** con pnpm para builds más rápidos
-- ✅ **Quality Gates** - Código debe pasar linting, tests y coverage
-- ✅ **Reportes automáticos** - Cobertura, tests y reportes E2E
-- ✅ **Multi-stage deployment** - Staging automático, Producción con aprobación
-- ✅ **Artefactos publicados** - Dist y reportes de Playwright
-- ✅ **Optimizado** - ~6.5 min con cache, ~9 min sin cache
-
-### 📚 Documentación del Pipeline
-
-- **[📖 Guía Completa del Pipeline](./PIPELINE_GUIDE.md)** - Configuración detallada
-- **[🔐 Guía de Variables Azure](./AZURE_VARIABLES_GUIDE.md)** - Secrets y configuración
-- **[📊 Diagrama de Flujo](./PIPELINE_FLOW_DIAGRAM.md)** - Flujo visual completo
-- **[✅ Resumen de Deployment](./DEPLOYMENT_SUMMARY.md)** - Quick start
-
-### 🚀 Ejecutar localmente
-
-```bash
-# Simular pipeline completo
-pnpm run format:check  # Verificar formato
-pnpm run lint          # Linting
-pnpm run build         # Build
-pnpm run test:coverage # Tests unitarios + coverage
-pnpm run test:e2e      # Tests E2E
-
-# O ejecutar todo en un comando
-pnpm run test:all && pnpm run build
-```
-
-### 🌐 Deployment Scripts
-
-El proyecto incluye scripts listos para deployment:
-
-```bash
-# Azure Static Web Apps
-./scripts/deploy-azure-static.sh <staging|production> <token>
-
-# AWS S3 + CloudFront
-./scripts/deploy-aws-s3.sh <staging|production>
-
-# Health check post-deployment
-./scripts/health-check.sh <url>
-```
-
----
-
-## �📦 Instalación
+## 📦 Instalación
 
 ### Prerrequisitos
 
