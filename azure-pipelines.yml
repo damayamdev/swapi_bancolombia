@@ -1,21 +1,176 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+# Pipeline de CI/CD para SWAPI Bancolombia
+# React + Vite + TypeScript + Vitest + Playwright
 
 trigger:
-- main
+  branches:
+    include:
+      - main
+      - develop
+  paths:
+    exclude:
+      - README.md
+      - PLAN_DE_PRUEBAS.md
+      - .gitignore
 
+pr:
+  branches:
+    include:
+      - main
+      - develop
+
+variables:
+  nodeVersion: '20.x'
+  pnpmVersion: '9.x'
+  
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+stages:
+  # ==============================
+  # STAGE 1: CI - Build y Testing
+  # ==============================
+  - stage: CI
+    displayName: 'Integración Continua'
+    jobs:
+      - job: Build_and_Test
+        displayName: 'Build, Lint y Tests'
+        steps:
+          # Instalación de Node.js
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(nodeVersion)
+            displayName: '📦 Instalar Node.js $(nodeVersion)'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+          # Instalación de pnpm
+          - script: |
+              npm install -g pnpm@$(pnpmVersion)
+              pnpm --version
+            displayName: '📦 Instalar pnpm'
+
+          # Cache de dependencias de pnpm
+          - task: Cache@2
+            inputs:
+              key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+              path: $(PNPM_HOME)/store
+              restoreKeys: |
+                pnpm | "$(Agent.OS)"
+            displayName: '💾 Cache de dependencias pnpm'
+
+          # Instalación de dependencias
+          - script: |
+              pnpm install --frozen-lockfile
+            displayName: '📥 Instalar dependencias'
+
+          # Verificación de formato de código
+          - script: |
+              pnpm run format:check
+            displayName: '🎨 Verificar formato de código (Prettier)'
+            continueOnError: 'true'
+
+          # Linting
+          - script: |
+              pnpm run lint
+            displayName: '🔍 Linting (ESLint)'
+
+          # Compilación TypeScript y Build
+          - script: |
+              pnpm run build
+            displayName: '🏗️ Build del proyecto'
+
+          # Pruebas unitarias con coverage
+          - script: |
+              pnpm run test:coverage
+            displayName: '🧪 Ejecutar pruebas unitarias (Vitest + Coverage)'
+
+          # Instalar navegadores para Playwright
+          - script: |
+              pnpm exec playwright install --with-deps chromium
+            displayName: '🌐 Instalar navegadores Playwright'
+
+          # Pruebas E2E
+          - script: |
+              pnpm run test:e2e
+            displayName: '🎭 Ejecutar pruebas E2E (Playwright)'
+
+          # Publicar resultados de Playwright
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/test-results/results.xml'
+              mergeTestResults: true
+              failTaskOnFailedTests: false
+              testRunTitle: 'Playwright E2E Tests'
+            displayName: '📋 Publicar resultados E2E'
+            condition: succeededOrFailed()
+
+          # Publicar reporte HTML de Playwright
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'playwright-report'
+              artifact: 'playwright-report'
+              publishLocation: 'pipeline'
+            displayName: '📑 Publicar reporte Playwright'
+            condition: succeededOrFailed()
+
+          # Publicar artefactos de build (dist)
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/dist'
+              artifact: 'dist'
+              publishLocation: 'pipeline'
+            displayName: '📦 Publicar artefactos de build'
+            condition: succeeded()
+
+  # ==============================
+  # STAGE 2: CD - Deployment
+  # ==============================
+  - stage: Deploy_Staging
+    displayName: 'Deploy a Staging'
+    dependsOn: CI
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    jobs:
+      - deployment: Deploy_to_Staging
+        displayName: 'Desplegar a Staging'
+        environment: 'staging'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: '📥 Descargar artefactos'
+
+                # Aquí puedes agregar pasos específicos de deployment
+                # Ejemplos: Azure Static Web Apps, Azure App Service, S3, etc.
+                - script: |
+                    echo "Desplegando a entorno de Staging..."
+                    ls -la $(Pipeline.Workspace)/dist
+                  displayName: '🚀 Deploy a Staging'
+
+  - stage: Deploy_Production
+    displayName: 'Deploy a Producción'
+    dependsOn: CI
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: Deploy_to_Production
+        displayName: 'Desplegar a Producción'
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: dist
+                  displayName: '📥 Descargar artefactos'
+
+                # Deployment a producción
+                # Ejemplo para Azure Static Web Apps:
+                # - task: AzureStaticWebApp@0
+                #   inputs:
+                #     app_location: '$(Pipeline.Workspace)/dist'
+                #     azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
+                
+                - script: |
+                    echo "Desplegando a entorno de Producción..."
+                    ls -la $(Pipeline.Workspace)/dist
+                  displayName: '🚀 Deploy a Producción'
