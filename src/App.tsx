@@ -1,8 +1,10 @@
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
+
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <main>
+      <Outlet />
+    </main>
   );
 }
 

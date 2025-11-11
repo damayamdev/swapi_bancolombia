@@ -56,8 +56,10 @@ export const usePersonajeLista = (): UsePersonajeListaResult => {
   const loadMore = useCallback(() => {
     if (!isLoadingRef.current && hasMore) {
       setPage((prev) => prev + 1);
+    } else if (!hasMore && error) {
+      window.location.reload();
     }
-  }, [hasMore]);
+  }, [hasMore, error]);
 
   useEffect(() => {
     if (page > 1) {

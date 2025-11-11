@@ -1,3 +1,5 @@
+import type { Vehiculo } from './Vehiculo';
+
 export interface Personaje {
   id: string;
   name: string;
@@ -9,6 +11,7 @@ export interface Personaje {
   birthYear: string;
   gender: string;
   vehicleUrls: string[];
+  vehicles?: Vehiculo[];
 }
 
 export const crearPersonaje = (data: Partial<Personaje>): Personaje => {
@@ -27,5 +30,6 @@ export const crearPersonaje = (data: Partial<Personaje>): Personaje => {
     birthYear: data.birthYear || 'unknown',
     gender: data.gender || 'unknown',
     vehicleUrls: data.vehicleUrls || [],
+    vehicles: data.vehicles || [],
   };
 };
