@@ -1,0 +1,48 @@
+<testsuites id="" name="" tests="20" failures="0" skipped="0" errors="0" time="15.066218">
+<testsuite name="api.spec.ts" timestamp="2025-11-11T16:19:27.381Z" hostname="chromium" tests="7" failures="0" skipped="0" time="7.066" errors="0">
+<testcase name="SWAPI API Tests › debería obtener los datos de Luke Skywalker de la API" classname="api.spec.ts" time="2.004">
+</testcase>
+<testcase name="SWAPI API Tests › debería devolver 404 para personajes no existentes" classname="api.spec.ts" time="1.269">
+</testcase>
+<testcase name="SWAPI API Tests › debería obtener los datos del vehículo de la API" classname="api.spec.ts" time="1.463">
+</testcase>
+<testcase name="SWAPI API Tests › debería buscar personajes por nombre" classname="api.spec.ts" time="1.656">
+</testcase>
+<testcase name="SWAPI API Tests › debería manejar la estructura de respuesta de la API correctamente" classname="api.spec.ts" time="0.206">
+</testcase>
+<testcase name="SWAPI API Tests › debería devolver una estructura de datos de vehículo válida" classname="api.spec.ts" time="0.225">
+</testcase>
+<testcase name="SWAPI API Tests › Rendimiento de la API: el tiempo de respuesta debe ser razonable." classname="api.spec.ts" time="0.243">
+</testcase>
+</testsuite>
+<testsuite name="personaje-lista.spec.ts" timestamp="2025-11-11T16:19:27.381Z" hostname="chromium" tests="7" failures="0" skipped="0" time="20.582" errors="0">
+<testcase name="Personaje Lista Page E2E Tests › debería mostrar la lista de personajes en la página de inicio" classname="personaje-lista.spec.ts" time="2.376">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería mostrar los nombres de los personajes en la lista" classname="personaje-lista.spec.ts" time="4.101">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería cargar más personajes al desplazarse (lazy loading)" classname="personaje-lista.spec.ts" time="5.347">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería abrir el modal al hacer clic en Ver detalles completos" classname="personaje-lista.spec.ts" time="4.611">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería mostrar las pestañas de navegación" classname="personaje-lista.spec.ts" time="0.686">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería navegar a la página de búsqueda al hacer clic en Buscar por ID" classname="personaje-lista.spec.ts" time="1.976">
+</testcase>
+<testcase name="Personaje Lista Page E2E Tests › debería ser receptivo en la vista móvil" classname="personaje-lista.spec.ts" time="1.485">
+</testcase>
+</testsuite>
+<testsuite name="personaje.spec.ts" timestamp="2025-11-11T16:19:27.381Z" hostname="chromium" tests="6" failures="0" skipped="0" time="12.177" errors="0">
+<testcase name="Pruebas E2E de visualización de personaje › Debe mostrar la información del personaje Luke Skywalker." classname="personaje.spec.ts" time="1.878">
+</testcase>
+<testcase name="Pruebas E2E de visualización de personaje › Debe mostrar la altura del personaje con la unidad correcta" classname="personaje.spec.ts" time="1.813">
+</testcase>
+<testcase name="Pruebas E2E de visualización de personaje › Debe mostrar la sección de vehículos" classname="personaje.spec.ts" time="3.821">
+</testcase>
+<testcase name="Pruebas E2E de visualización de personaje › Debe mostrar el estado de carga inicialmente" classname="personaje.spec.ts" time="0.552">
+</testcase>
+<testcase name="Pruebas E2E de visualización de personaje › Debe ser receptivo en la vista móvil" classname="personaje.spec.ts" time="1.344">
+</testcase>
+<testcase name="Pruebas E2E de visualización de personaje › Debe manejar la recarga de página de manera adecuada" classname="personaje.spec.ts" time="2.769">
+</testcase>
+</testsuite>
+</testsuites>
