@@ -87,12 +87,13 @@
 - ✅ Todas las pruebas pasan (86/86)
 
 #### 3.2.2 Pruebas de Integración ✅
-**Herramienta:** Vitest + MSW (Mock Service Worker) v2.12.1  
+**Herramienta:** Vitest con Mocking Manual (vi.fn())  
 **Alcance:**
 - ✅ Integración entre capas de arquitectura limpia
 - ✅ Flujo: Presentación → Aplicación → Core → Infraestructura
 - ✅ Hooks personalizados con casos de uso
 - ✅ Repositorios con cliente API
+- ✅ Mocking de dependencias con Vitest
 - ✅ Mappers con respuestas de API mockeadas
 - ✅ Manejo de errores end-to-end
 
@@ -142,7 +143,7 @@
 | **Funcional** | Verificar que funcionalidades cumplen requisitos | Crítica | Playwright | ✅ 18 tests |
 | **Regresión** | Verificar que cambios no rompen funcionalidad | Alta | Vitest + Playwright | ✅ 104 tests |
 | **Unitarias** | Verificar unidades aisladas de código | Alta | Vitest | ✅ 86 tests |
-| **Integración** | Verificar interacción entre capas | Alta | Vitest + MSW | ✅ Incluidas |
+| **Integración** | Verificar interacción entre capas | Alta | Vitest (mocking manual) | ✅ Incluidas |
 | **API** | Endpoints de SWAPI funcionan correctamente | Crítica | Playwright | ✅ 6 tests |
 | **UI/UX** | Interfaz intuitiva y feedback visual | Media | Playwright | ✅ Manual |
 | **Rendimiento** | Tiempo de carga y respuesta | Media | Playwright API | ⚠️ Manual |
@@ -586,11 +587,11 @@ interface UseBuscarPersonajeResult {
 | **Prettier** | Formateado | ✅ Configurado |
 | **Inmutabilidad** | Aplicada | ✅ readonly, const |
 
-### 5.4 Criterios de Documentación ⚠️
+### 5.4 Criterios de Documentación ✅
 
 | Criterio | Estado |
 |----------|--------|
-| **README actualizado** | ⚠️ Pendiente |
+| **README actualizado** | ✅ Completado |
 | **Plan de Pruebas** | ✅ Este documento |
 
 ---
@@ -739,7 +740,6 @@ src/
     "@vitest/coverage-v8": "^4.0.8",
     "@vitest/ui": "^4.0.8",
     "jsdom": "^27.1.0",
-    "msw": "^2.12.1",
     "vitest": "^4.0.8"
   }
 }
@@ -778,7 +778,7 @@ projects: [
 |------|-----------|----------|-------------|-------------|
 | **1** | Setup entorno | 30 min | Dev | pnpm install |
 | **2** | Pruebas unitarias Core | 1h | Dev | Vitest |
-| **3** | Pruebas Infrastructure | 1h | Dev | Vitest + MSW |
+| **3** | Pruebas Infrastructure | 1h | Dev | Vitest (mocking) |
 | **4** | Pruebas Application | 45 min | Dev | Vitest |
 | **5** | Pruebas Presentation | 45 min | Dev | Vitest + RTL |
 | **6** | Análisis cobertura | 15 min | Dev/QA | Coverage report |
@@ -830,21 +830,21 @@ pnpm format
 
 | ID | Riesgo | Probabilidad | Impacto | Severidad | Mitigación | Estado |
 |----|--------|--------------|---------|-----------|------------|--------|
-| **R-001** | API SWAPI caída temporalmente | Media | Alto | 🔴 Crítico | MSW mocks, retry logic, timeout 5s | ✅ Mitigado |
+| **R-001** | API SWAPI caída temporalmente | Media | Alto | 🔴 Crítico | Mocking con Vitest, retry logic, timeout 5s | ✅ Mitigado |
 | **R-002** | Cambios en estructura API SWAPI | Baja | Alto | 🔴 Crítico | Mappers desacoplados, validación de tipos | ✅ Mitigado |
 | **R-003** | Timeout en requests lentos | Alta | Medio | 🟡 Moderado | Timeout configurado (5000ms), AbortController | ✅ Mitigado |
 | **R-004** | Errores de red intermitentes | Alta | Medio | 🟡 Moderado | NetworkError handling, retry button | ✅ Mitigado |
-| **R-005** | Cobertura < 70% | Baja | Alto | 🔴 Crítico | TDD aplicado, CI verificación | ✅ No aplica (95.54%) |
+| **R-005** | Cobertura < 70% | Baja | Alto | 🔴 Crítico | TDD aplicado, verificación manual | ✅ No aplica (95.54%) |
 | **R-006** | Incompatibilidad navegadores | Baja | Medio | 🟡 Moderado | Playwright 3 engines, Tailwind CSS | ✅ Mitigado |
 | **R-007** | Pruebas E2E flaky (inestables) | Media | Medio | 🟡 Moderado | Waits explícitos, timeouts adecuados | ✅ Mitigado |
-| **R-008** | Dependencies vulnerabilities | Media | Medio | 🟡 Moderado | Dependabot, actualizaciones regulares | ⚠️ Monitorear |
+| **R-008** | Dependencies vulnerabilities | Media | Medio | 🟡 Moderado | Actualizaciones regulares, npm audit | ⚠️ Monitorear |
 | **R-009** | Rendimiento en listas grandes | Media | Bajo | 🟢 Bajo | Lazy loading implementado | ✅ Mitigado |
 | **R-010** | Cambios en estructura del reto | Baja | Alto | 🔴 Crítico | Arquitectura flexible, documentación | ✅ Mitigado |
 
 ### 10.1 Plan de Contingencia
 
 **Si API SWAPI está caída:**
-1. Activar MSW para mocks locales
+1. Usar mocks de Vitest con `vi.fn()` para simular respuestas
 2. Continuar desarrollo con datos simulados
 3. Ejecutar pruebas unitarias y de integración normalmente
 4. Posponer pruebas E2E de API hasta recuperación
@@ -925,7 +925,7 @@ pnpm format
 - ✅ 86 pruebas unitarias (15 archivos)
 - ✅ 18 pruebas E2E (3 archivos)
 - ✅ Configuración Vitest y Playwright
-- ✅ Setup de MSW para mocks
+- ✅ Mocking manual con Vitest (vi.fn())
 
 ### 12.3 Reportes
 - ✅ Reporte de cobertura HTML (`coverage/index.html`)
@@ -935,9 +935,7 @@ pnpm format
 
 ### 12.4 Documentación
 - ✅ Este Plan de Pruebas (`PLAN_DE_PRUEBAS.md`)
-- ⚠️ README.md (pendiente actualizar)
-- ✅ Comentarios en código
-- ⚠️ Diagramas de arquitectura (recomendado)
+- ✅ README.md (actualizado con documentación completa)
 
 ### 12.5 Configuración
 - ✅ `vitest.config.ts` - Configuración de pruebas unitarias
@@ -1037,13 +1035,6 @@ export class BuscarPersonajesUseCase {
 6. **✅ Manejo de Errores:** Robusto con errores personalizados
 7. **✅ Pruebas E2E:** Cubren API y Frontend en 3 navegadores
 8. **✅ Mantenibilidad:** Código limpio, desacoplado y testeable
-
-### 14.2 Áreas de Mejora Recomendadas 📈
-
-1. ⚠️ **README.md:** Actualizar con información del proyecto específico
-2. ⚠️ **Documentación:** Agregar diagramas de arquitectura visuales
-4. 💡 **Performance testing:** Implementar métricas de rendimiento detalladas
-6. 💡 **CI/CD:** Configurar GitHub Actions para ejecución automática
 
 
 ## 15. Aprobación y Firma

@@ -109,7 +109,6 @@ El proyecto implementa **Clean Architecture** con separación clara de responsab
 - **Vitest 4.0.8** - Unit & Integration Tests (⚡ más rápido que Jest)
 - **React Testing Library 16.3** - Component Tests
 - **Playwright 1.56** - E2E Tests multi-navegador
-- **MSW 2.12** - API Mocking para tests
 
 ### Code Quality
 - **ESLint 9** - Linting con reglas personalizadas
@@ -624,7 +623,6 @@ pnpm run test:coverage
 - [Vitest Documentation](https://vitest.dev/) - Unit testing framework
 - [React Testing Library](https://testing-library.com/react) - Best practices
 - [Playwright](https://playwright.dev/) - E2E testing
-- [MSW](https://mswjs.io/) - API mocking
 
 ### Herramientas
 - [Vite](https://vitejs.dev/) - Build tool
