@@ -2,7 +2,6 @@ import { crearPersonaje, type Personaje } from '@core/entities/Personaje';
 import type { SwapiPersonajeResponse } from '../api/types';
 
 export class PersonajeMapper {
-
   private static extraerIdDeUrl(url: string | undefined): string {
     if (!url) return '';
     // Extrae el número al final de la URL, con o sin barra inclinada

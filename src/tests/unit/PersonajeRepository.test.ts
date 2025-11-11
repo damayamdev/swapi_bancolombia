@@ -71,7 +71,7 @@ describe('PersonajeRepository', () => {
         count: 1,
         next: null,
         previous: null,
-        results: [mockApiResponse], 
+        results: [mockApiResponse],
       });
 
       const characters = await repository.buscarPersonajeByName('Luke');

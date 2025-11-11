@@ -52,9 +52,7 @@ describe('VehiculoRepository', () => {
     });
 
     it('debe devolver null cuando el vehículo no se encuentra', async () => {
-      vi.mocked(mockApiClient.getVehiculoByUrl).mockRejectedValue(
-        new NotFoundError('Not found')
-      );
+      vi.mocked(mockApiClient.getVehiculoByUrl).mockRejectedValue(new NotFoundError('Not found'));
 
       const vehicle = await repository.getVehiculoByUrl('https://swapi.dev/api/vehicles/999/');
 

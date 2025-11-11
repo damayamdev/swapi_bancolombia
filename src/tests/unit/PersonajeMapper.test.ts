@@ -58,7 +58,10 @@ describe('PersonajeMapper', () => {
 
   describe('toDomainList', () => {
     it('Debe mapear múltiples respuestas de la API a entidades de dominio', () => {
-      const responses = [mockApiResponse, { ...mockApiResponse, url: 'https://swapi.dev/api/people/2/' }];
+      const responses = [
+        mockApiResponse,
+        { ...mockApiResponse, url: 'https://swapi.dev/api/people/2/' },
+      ];
       const personajes = PersonajeMapper.toDomainList(responses);
 
       expect(personajes).toHaveLength(2);

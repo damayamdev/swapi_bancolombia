@@ -1,4 +1,3 @@
-
 export interface SwapiPersonajeResponse {
   name: string;
   height: string;
@@ -43,7 +42,6 @@ export interface SwapiBusquedaResponse<T> {
   previous: string | null;
   results: T[];
 }
-
 
 export class ApiError extends Error {
   public statusCode?: number;

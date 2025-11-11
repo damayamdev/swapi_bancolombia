@@ -16,7 +16,6 @@ export class SwapiClient {
     this.timeout = timeout;
   }
 
-
   private async fetchWithTimeout(url: string, options: RequestInit = {}): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
@@ -61,19 +60,19 @@ export class SwapiClient {
     const response = await this.fetchWithTimeout(url);
     return this.handleResponse<SwapiPersonajeResponse>(response);
   }
-  
+
   async buscarPersonajes(name: string): Promise<SwapiBusquedaResponse<SwapiPersonajeResponse>> {
     const url = `${this.baseUrl}/people/?search=${encodeURIComponent(name)}`;
     const response = await this.fetchWithTimeout(url);
     return this.handleResponse<SwapiBusquedaResponse<SwapiPersonajeResponse>>(response);
   }
-  
+
   async getAllPersonajes(page = 1): Promise<SwapiBusquedaResponse<SwapiPersonajeResponse>> {
     const url = `${this.baseUrl}/people/?page=${page}`;
     const response = await this.fetchWithTimeout(url);
     return this.handleResponse<SwapiBusquedaResponse<SwapiPersonajeResponse>>(response);
   }
-  
+
   async getVehiculoByUrl(url: string): Promise<SwapiVehiculoResponse> {
     const response = await this.fetchWithTimeout(url);
     return this.handleResponse<SwapiVehiculoResponse>(response);

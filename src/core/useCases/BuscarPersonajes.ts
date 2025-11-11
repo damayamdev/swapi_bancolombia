@@ -9,7 +9,6 @@ export class BuscarPersonajesUseCase {
   }
 
   async execute(searchTerm: string): Promise<Personaje[]> {
- 
     if (!searchTerm || searchTerm.trim().length === 0) {
       throw new Error('El item de búsqueda es obligatorio');
     }

@@ -11,7 +11,6 @@ export interface Personaje {
   vehicleUrls: string[];
 }
 
-
 export const crearPersonaje = (data: Partial<Personaje>): Personaje => {
   if (!data.name || data.name.trim().length === 0) {
     throw new Error('Nombre es obligatorio para crear un Personaje');

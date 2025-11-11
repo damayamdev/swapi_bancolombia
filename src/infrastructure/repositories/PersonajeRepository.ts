@@ -4,7 +4,6 @@ import { SwapiClient } from '../api/SwapiClient';
 import { PersonajeMapper } from '../mappers/PersonajeMapper';
 import { NotFoundError } from '../api/types';
 
-
 export class PersonajeRepository implements IPersonajeRepository {
   private readonly apiClient: SwapiClient;
 

@@ -1,8 +1,7 @@
 import { crearVehiculo, type Vehiculo } from '@core/entities/Vehiculo';
 import type { SwapiVehiculoResponse } from '../api/types';
-    
-export class VehiculoMapper {
 
+export class VehiculoMapper {
   private static extractIdFromUrl(url: string): string {
     const match = url.match(/\/(\d+)\/$/);
     return match ? match[1] : '';

@@ -5,7 +5,6 @@ import type { IVehiculoRepository } from '@core/repositories/IVehiculoRepository
 import type { Personaje } from '@core/entities/Personaje';
 import type { Vehiculo } from '@core/entities/Vehiculo';
 
-
 describe('ObtenerPersonajeConVehículosUseCase', () => {
   let personajeRepository: IPersonajeRepository;
   let vehiculoRepository: IVehiculoRepository;
