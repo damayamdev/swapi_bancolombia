@@ -10,7 +10,7 @@ describe('BuscarPersonajesUseCase', () => {
   beforeEach(() => {
     personajeRepository = {
       getPersonajeById: vi.fn(),
-      searchPersonajesByName: vi.fn(),
+      buscarPersonajeByName: vi.fn(),
     };
 
     useCase = new BuscarPersonajesUseCase(personajeRepository);
@@ -32,29 +32,29 @@ describe('BuscarPersonajesUseCase', () => {
       },
     ];
 
-    vi.mocked(personajeRepository.searchPersonajesByName).mockResolvedValue(mockCharacters);
+    vi.mocked(personajeRepository.buscarPersonajeByName).mockResolvedValue(mockCharacters);
 
     const result = await useCase.execute('Luke');
 
     expect(result).toEqual(mockCharacters);
-    expect(personajeRepository.searchPersonajesByName).toHaveBeenCalledWith('Luke');
+    expect(personajeRepository.buscarPersonajeByName).toHaveBeenCalledWith('Luke');
   });
 
   it('debe devolver un array vacío cuando no hay personajes que coincidan', async () => {
-    vi.mocked(personajeRepository.searchPersonajesByName).mockResolvedValue([]);
+    vi.mocked(personajeRepository.buscarPersonajeByName).mockResolvedValue([]);
 
     const result = await useCase.execute('XYZ');
 
     expect(result).toEqual([]);
-    expect(personajeRepository.searchPersonajesByName).toHaveBeenCalledWith('XYZ');
+    expect(personajeRepository.buscarPersonajeByName).toHaveBeenCalledWith('XYZ');
   });
 
   it('debe eliminar los espacios en blanco del término de búsqueda antes de buscar', async () => {
-    vi.mocked(personajeRepository.searchPersonajesByName).mockResolvedValue([]);
+    vi.mocked(personajeRepository.buscarPersonajeByName).mockResolvedValue([]);
 
     await useCase.execute('  Luke  ');
 
-    expect(personajeRepository.searchPersonajesByName).toHaveBeenCalledWith('Luke');
+    expect(personajeRepository.buscarPersonajeByName).toHaveBeenCalledWith('Luke');
   });
 
   it('debe lanzar un error cuando el término de búsqueda está vacío', async () => {

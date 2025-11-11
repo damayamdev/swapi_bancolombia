@@ -14,7 +14,7 @@ describe('ObtenerPersonajeConVehículosUseCase', () => {
   beforeEach(() => {
     personajeRepository = {
       getPersonajeById: vi.fn(),
-      searchPersonajesByName: vi.fn(),
+      buscarPersonajeByName: vi.fn(),
     };
 
     vehiculoRepository = {

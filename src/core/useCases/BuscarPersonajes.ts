@@ -18,6 +18,6 @@ export class BuscarPersonajesUseCase {
       throw new Error('El item de búsqueda debe tener al menos 2 caracteres');
     }
 
-    return await this.personajeRepository.searchPersonajesByName(searchTerm.trim());
+    return await this.personajeRepository.buscarPersonajeByName(searchTerm.trim());
   }
 }
