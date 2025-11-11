@@ -17,7 +17,7 @@ export const VehiculoLista = ({ vehiculo }: VehiculoListaProps) => {
     <div className="mt-8" data-testid="vehicle-list">
       <div className="mb-6">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Vehiculos</h3>
-        <div className="h-1 w-16 bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 rounded-full"></div>
+        <div className="h-1 w-16 bg-linear-to-r from-teal-400 via-blue-400 to-purple-400 rounded-full"></div>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {vehiculo.map((vehiculoItem) => (
