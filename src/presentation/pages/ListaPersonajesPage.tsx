@@ -1,7 +1,7 @@
 import { usePersonajeLista } from '@/application/hooks/usePersonajeLista';
 import type { Personaje } from '@/core/entities/Personaje';
 import { useEffect, useRef, useState } from 'react';
-import { MesajeError } from '../components/MesajeError';
+import { MensajeError } from '../components/MensajeError';
 import { PersonajeCardList } from '../components/PersonajeCardList';
 import { Loading } from '../components/Loading';
 import PersonajeModal from '../components/PersonajeModal';
@@ -69,7 +69,7 @@ export const ListaPersonajesPage = () => {
       <main className="max-w-400 mx-auto px-8 sm:px-6 lg:px-8 py-8">
         {error && (
           <div className="mb-8">
-            <MesajeError error={error} onRetry={loadMore} />
+            <MensajeError error={error} onRetry={loadMore} />
           </div>
         )}
 

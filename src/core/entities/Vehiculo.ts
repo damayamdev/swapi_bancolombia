@@ -14,7 +14,7 @@ export interface Vehiculo {
 
 export const crearVehiculo = (data: Partial<Vehiculo>): Vehiculo => {
   if (!data.name || data.name.trim().length === 0) {
-    throw new Error('Nombre es obligatorio para crear un Vehiculo');
+    throw new Error('El nombre del vehículo es obligatorio');
   }
 
   return {

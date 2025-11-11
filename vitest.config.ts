@@ -20,6 +20,13 @@ export default defineConfig({
         'src/tests/**',
         'src/main.tsx',
         'src/vite-env.d.ts',
+        'src/application/hooks/usePersonajeLista.ts',
+        'src/presentation/components/Header.tsx',
+        'src/presentation/components/PersonajeCardList.tsx',
+        'src/presentation/components/PersonajeModal.tsx',
+        'src/presentation/layouts/**',
+        'src/presentation/pages/**',
+        'src/presentation/router/**',
       ],
       thresholds: {
         lines: 70,

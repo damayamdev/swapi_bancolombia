@@ -31,7 +31,7 @@ const PersonajeModal = ({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
       onClick={onClose}
-      data-testid="modal-overlay"
+      data-testid="modal"
     >
       <div
         className="bg-white rounded-2xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200"

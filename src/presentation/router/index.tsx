@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { DashboardLayout } from '@presentation/layouts/DashboardLayout';
 import { ListaPersonajesPage } from '@presentation/pages/ListaPersonajesPage';
+import { PersonajePage } from '@presentation/pages/PersonajePage';
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'personaje-id',
-        element: <>nuevo</>,
+        element: <PersonajePage />,
       },
     ],
   },

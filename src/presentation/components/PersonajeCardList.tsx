@@ -12,7 +12,7 @@ export const PersonajeCardList = ({
   return (
     <div
       className="relative bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 group border border-gray-200"
-      data-testid="character-card-list"
+      data-testid="personaje-card-lista"
     >
       <div className="absolute inset-0 bg-gray-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
 
@@ -162,7 +162,7 @@ export const PersonajeCardList = ({
         <button
           onClick={onViewDetails}
           className="w-full py-3 bg-white border-2 border-gray-900 hover:bg-gray-900 text-gray-900 hover:text-white font-semibold rounded-full transition-all duration-300 flex items-center justify-center gap-2"
-          data-testid="view-details-button"
+          data-testid="ver-detalles-button"
         >
           <span>Ver detalles completos</span>
           <svg

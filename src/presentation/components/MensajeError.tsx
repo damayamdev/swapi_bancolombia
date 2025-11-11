@@ -1,11 +1,11 @@
 import type React from 'react';
 
-interface MesajeErrorProps {
+interface MensajeErrorProps {
   error: Error;
   onRetry?: () => void;
 }
 
-export const MesajeError = ({ error, onRetry }: MesajeErrorProps): React.ReactElement => {
+export const MensajeError = ({ error, onRetry }: MensajeErrorProps): React.ReactElement => {
   return (
     <div
       className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl mx-auto"
@@ -36,7 +36,7 @@ export const MesajeError = ({ error, onRetry }: MesajeErrorProps): React.ReactEl
               className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
               data-testid="retry-button"
             >
-              Try Again
+              Inténtalo de nuevo
             </button>
           )}
         </div>
