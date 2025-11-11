@@ -1,6 +1,3 @@
-# Pipeline de CI/CD para SWAPI Bancolombia
-# React + Vite + TypeScript + Vitest + Playwright
-
 trigger:
   branches:
     include:
@@ -26,28 +23,22 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  # ==============================
-  # STAGE 1: CI - Build y Testing
-  # ==============================
   - stage: CI
     displayName: 'Integración Continua'
     jobs:
       - job: Build_and_Test
         displayName: 'Build, Lint y Tests'
         steps:
-          # Instalación de Node.js
           - task: NodeTool@0
             inputs:
               versionSpec: $(nodeVersion)
             displayName: '📦 Instalar Node.js $(nodeVersion)'
 
-          # Instalación de pnpm
           - script: |
               npm install -g pnpm@$(pnpmVersion)
               pnpm --version
             displayName: '📦 Instalar pnpm'
 
-          # Cache de dependencias de pnpm
           - task: Cache@2
             inputs:
               key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
@@ -56,43 +47,35 @@ stages:
                 pnpm | "$(Agent.OS)"
             displayName: '💾 Cache de dependencias pnpm'
 
-          # Instalación de dependencias
           - script: |
               pnpm install --frozen-lockfile
             displayName: '📥 Instalar dependencias'
 
-          # Verificación de formato de código
           - script: |
               pnpm run format:check
             displayName: '🎨 Verificar formato de código (Prettier)'
             continueOnError: 'true'
 
-          # Linting
           - script: |
               pnpm run lint
             displayName: '🔍 Linting (ESLint)'
 
-          # Compilación TypeScript y Build
           - script: |
               pnpm run build
             displayName: '🏗️ Build del proyecto'
 
-          # Pruebas unitarias con coverage
           - script: |
               pnpm run test:coverage
             displayName: '🧪 Ejecutar pruebas unitarias (Vitest + Coverage)'
 
-          # Instalar navegadores para Playwright
           - script: |
               pnpm exec playwright install --with-deps chromium
             displayName: '🌐 Instalar navegadores Playwright'
 
-          # Pruebas E2E
           - script: |
               pnpm run test:e2e
             displayName: '🎭 Ejecutar pruebas E2E (Playwright)'
 
-          # Publicar resultados de Playwright
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
@@ -103,7 +86,6 @@ stages:
             displayName: '📋 Publicar resultados E2E'
             condition: succeededOrFailed()
 
-          # Publicar reporte HTML de Playwright
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'playwright-report'
@@ -112,7 +94,6 @@ stages:
             displayName: '📑 Publicar reporte Playwright'
             condition: succeededOrFailed()
 
-          # Publicar artefactos de build (dist)
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: '$(System.DefaultWorkingDirectory)/dist'
@@ -121,9 +102,6 @@ stages:
             displayName: '📦 Publicar artefactos de build'
             condition: succeeded()
 
-  # ==============================
-  # STAGE 2: CD - Deployment
-  # ==============================
   - stage: Deploy_Staging
     displayName: 'Deploy a Staging'
     dependsOn: CI
@@ -140,8 +118,6 @@ stages:
                   artifact: dist
                   displayName: '📥 Descargar artefactos'
 
-                # Aquí puedes agregar pasos específicos de deployment
-                # Ejemplos: Azure Static Web Apps, Azure App Service, S3, etc.
                 - script: |
                     echo "Desplegando a entorno de Staging..."
                     ls -la $(Pipeline.Workspace)/dist
@@ -162,14 +138,7 @@ stages:
                 - download: current
                   artifact: dist
                   displayName: '📥 Descargar artefactos'
-
-                # Deployment a producción
-                # Ejemplo para Azure Static Web Apps:
-                # - task: AzureStaticWebApp@0
-                #   inputs:
-                #     app_location: '$(Pipeline.Workspace)/dist'
-                #     azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
-                
+                  
                 - script: |
                     echo "Desplegando a entorno de Producción..."
                     ls -la $(Pipeline.Workspace)/dist
